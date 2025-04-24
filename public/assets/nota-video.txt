@@ -1,0 +1,4 @@
+- En esta carpeta va el video de la segunda pantalla.
+- El video debe llamarse "video.mp4", con dicha extensión.
+- Para levantar un video nuevo simplemente reemplazar el video anterior, 
+	siempre manteniendo el nombre y la extensión, y reiniciar la app.
