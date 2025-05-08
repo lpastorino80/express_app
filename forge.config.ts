@@ -13,7 +13,7 @@ const config: ForgeConfig = {
     asar: true,
     icon: path.resolve(__dirname, 'images/icon'),
     extraResource: [
-      "./public"     
+      "./public"
     ]
   },
   rebuildConfig: {},
@@ -22,14 +22,14 @@ const config: ForgeConfig = {
     new MakerZIP({}, ['darwin']),
     new MakerDeb({
       options: {
-        icon: path.resolve(__dirname, 'images/icon.png'),
+        icon: path.resolve(__dirname, 'images/icon.ico'),
         categories: ['Utility'],
         description: 'Express Application',
       }
     }, ['linux']),
     new MakerRpm({
       options: {
-        icon: path.resolve(__dirname, 'images/icon.png'),
+        icon: path.resolve(__dirname, 'images/icon.ico'),
         categories: ['Utility'],
         description: 'Express Application',
       },

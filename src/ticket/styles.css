@@ -6,8 +6,6 @@ html, body {
     overflow: hidden;
     font-family: 'Trebuchet MS', Helvetica, 'Helvetica Neue', Arial, sans-serif;
     background-color: #FFFFFF;
-    #background-image: linear-gradient(to top, #389294 0, #1f6666 50%);
-    #background-color: rgba(0,0,0,0.1);
     border-left: 1px solid #000000;
 }
 
@@ -34,6 +32,9 @@ html, body {
     .item-image img {
         width: 90%;
     }
+    .fiserv-logo {
+        width: 100px;
+    }
 }
 
 @media (min-width: 1920px) and (max-width: 2559px) {
@@ -55,6 +56,9 @@ html, body {
     .item-image img {
         width: 85%;
     }
+    .fiserv-logo {
+        width: 120px;
+    }
 }
 
 @media (min-width: 2560px) {
@@ -75,6 +79,9 @@ html, body {
     }
     .item-image img {
         width: 80%;
+    }
+    .fiserv-logo {
+        width: 120px;
     }
 }
 
@@ -226,6 +233,7 @@ html, body {
     padding: 0 32px;
     width: 90%;
     height: 80vh;
+    overflow: hidden;
 }
 
 .main-panel {
@@ -233,26 +241,33 @@ html, body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    #background-image: linear-gradient(to top, #FFFFFF 0, #1f6666 70%);
-    #background-image: linear-gradient(to top, #FF6600 0, #FFFFFF 30%);
-    background-color: rgba(0,0,0,0.02);
+    background-color: rgba(0,0,0,0);
+    background:url(../assets/fondo.png);
+    background-size:contain;
+    background-position:right;
+    background-repeat:no-repeat;
     border-left: 1px solid #000000;
+}
+
+.fiserv-logo {
+    bottom: 10vh;
+    right: 0px;
+    position: fixed;
 }
 
 .ticket-header {
     display: flex;
     height: 10vh;
     align-items: center;
-    #background-image: linear-gradient(to top, #389294 0, #1f6666 50%);
-    background-color: #ef7521;
-    border-left: 1px solid #000000;
-    color: #f3fafa;
+    border-bottom: 2px solid #ff6600;
+    color: #ff6600;
+    font-weight: 600;
     border-radius: 0px 0px 5px 5px;
     z-index: 5;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .ticket-body {
-    #background-color: #f3fafa;
     width: 100%;
     height: 80vh;
     font-size: 15px;
@@ -354,7 +369,6 @@ html, body {
     align-items: center;
     padding: 0 10px;
     bottom: 0px;
-    #background-image: linear-gradient(to top, #477277 0, #477277 10%);
     background-color: #909090;
     border-left: 1px solid #135252;
     color: #f3fafa;

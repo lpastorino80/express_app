@@ -25,6 +25,7 @@ export default defineConfig((env) => {
       // Load the Node.js entry.
       mainFields: ['module', 'jsnext:main', 'jsnext'],
     },
+    assetsInclude: ['**/*.mp4']
   };
 
   return mergeConfig(getBuildConfig(forgeEnv), config);

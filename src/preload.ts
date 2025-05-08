@@ -22,6 +22,7 @@ import { ipcRenderer, contextBridge } from 'electron';
     closeApp: () => ipcRenderer.send('close-app'),
     getLocalStorage: (key: string) => ipcRenderer.invoke('get-local-storage', key),
     getServerUrl: () => ipcRenderer.invoke('get-server-url'),
+    getFiservLogoPath: () => ipcRenderer.invoke('get-logo-path'),
     checkVideo: () => ipcRenderer.invoke('check-video')
   });
 })();

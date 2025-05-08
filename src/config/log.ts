@@ -21,6 +21,7 @@ class Log {
             logStream.write(`[ERROR] ${new Date().toISOString()} - ${args.join(' ')}\n`);
         };
     }
+
 }
 
 export { Log };

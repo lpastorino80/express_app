@@ -1,8 +1,8 @@
 {
   "name": "express_app",
-  "productName": "express_app",
-  "version": "1.0.6",
-  "description": "App de Geopos Express",
+  "productName": "Express Pos",
+  "version": "1.0.0",
+  "description": "App de Express Pos",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -37,14 +37,15 @@
   },
   "keywords": [],
   "author": {
-    "name": "Jorge Carmenate",
-    "email": "jcarmenate@geocom.com.uy"
+    "name": "Luis Pastorino",
+    "email": "lpastorino@geocom.com.uy"
   },
   "license": "MIT",
   "dependencies": {
     "@types/sockjs-client": "^1.5.4",
     "@types/stompjs": "^2.3.9",
     "electron-builder": "^24.13.3",
+    "electron-log": "^5.3.4",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^8.2.0",
     "numeral": "^2.0.6",
@@ -53,7 +54,7 @@
     "serialport": "^12.0.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
-    "update-electron-app": "^3.0.0",
+    "update-electron-app": "^3.1.1",
     "usb": "^2.13.0",
     "usb-detection": "^4.14.2",
     "vite-plugin-checker": "^0.7.2",

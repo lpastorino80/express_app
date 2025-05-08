@@ -98,10 +98,18 @@ class WindowManager {
       this.mainWindow?.show();
     });
     const appVersion = app.getVersion();
-    let videoPath = path.join((process as any).resourcesPath, 'public', 'assets', 'video.mp4');
+    let videoPath;// = path.join((process as any).resourcesPath, 'public', 'assets', 'video.mp4');
+    let logoFiservPath = path.join(__dirname, 'assets', 'FiservLogo_125px.mp4');
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
       videoPath = path.join(__dirname, 'assets', 'video.mp4');
-    } 
+    } else {
+      const videoDir = path.join(app.getPath('userData'), 'video');
+      videoPath = path.join(videoDir, 'video.mp4');
+      if (!fs.existsSync(videoDir)) {
+        fs.mkdirSync(videoDir, { recursive: true });
+      }
+      logoFiservPath = path.join(process.resourcesPath, 'public', 'assets', 'FiservLogo_125px.mp4');
+    }
     console.log('Version: ' + appVersion)
     this.mainWindow.webContents.executeJavaScript(`
         const versionDiv = document.createElement('div');
@@ -125,6 +133,9 @@ class WindowManager {
     });
     ipcMain.handle('get-server-url', () => {
       return config.url;
+    });
+    ipcMain.handle('get-logo-path', () => {
+      return logoFiservPath;
     });
     ipcMain.handle('check-video', async () => {
       try {      

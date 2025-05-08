@@ -88,6 +88,12 @@ const TicketFooter = ({ticket, defaultCurrency, ticketHasItems}) => (
     </div>
 );
 
+const FiservLogo = ({ path }) => (
+    <div className="fiserv-logo">
+        <VideoPlayerLocal path={path}/>
+    </div>
+);
+
 const EmptyCart = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage }) => (
     <div className={`main-panel`}>
         <TicketHeader ticket= {ticket} chainImage={chainImage} cashierName={ticket.cashierName} clientName={ticket.client?.fullName} />
@@ -104,7 +110,7 @@ const EmptyCart = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage 
     </div>
 )
 
-const Cart = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage, ticketHasItems }) => (
+const Cart = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage, ticketHasItems, logoPath }) => (
     <div className={`main-panel ${smallVideo ? 'small-video' : ''}`}>
         <TicketHeader ticket= {ticket} chainImage={chainImage} cashierName={ticket.cashierName} clientName={ticket.client?.fullName} />
         <div className="container text-center">
@@ -132,15 +138,20 @@ const Cart = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage, tick
                 </div>
             </div>}
         </div>
+        <div className="fiserv-logo">
+            {logoPath &&
+                <VideoPlayerLocal path={logoPath}/>
+            }
+        </div>
         <TicketFooter ticket={ticket} defaultCurrency={defaultCurrency} ticketHasItems={ticketHasItems}/>
     </div>
 );
 
-const SecondWindow = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage, ticketHasItems }) => (
+const SecondWindow = ({ ticket, chainImage, smallVideo, defaultCurrency, itemImage, ticketHasItems, logoPath }) => (
     <div className={`main-panel ${smallVideo ? 'small-video' : ''}`}>
     {(() => {
         //if (ticket && ticket.items && ticket.items.length > 0) {
-            return <Cart ticket={ticket} chainImage={chainImage} smallVideo={smallVideo} defaultCurrency={defaultCurrency} itemImage={itemImage} ticketHasItems={ticketHasItems} />
+            return <Cart ticket={ticket} chainImage={chainImage} smallVideo={smallVideo} defaultCurrency={defaultCurrency} itemImage={itemImage} logoPath={logoPath} ticketHasItems={ticketHasItems} />
         /*} else {
             return <EmptyCart ticket={ticket} chainImage={chainImage} smallVideo={smallVideo} defaultCurrency={ticket.currency} itemImage={itemImage} />
         }*/

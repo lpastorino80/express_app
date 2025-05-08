@@ -1,4 +1,4 @@
-import {app, ipcMain, session} from 'electron';
+import {ipcMain, session, app} from 'electron';
 import {Config} from "./config/config";
 import {UsbManager} from "./printer/usb-manager";
 import {Log} from "./config/log";
@@ -6,9 +6,7 @@ import {PrinterManager} from "./printer/printer-manager";
 import {Utils} from "./config/utils";
 import Socket from "./socket/socket";
 import WindowManager from "./windowManager";
-//import { updateElectronApp, UpdateSourceType } from 'update-electron-app'
-
-/*updateElectronApp({  updateSource: {    type: UpdateSourceType.ElectronPublicUpdateService,    repo: 'jlcarmenate2017/express-app'  },  updateInterval: '1 hour',  logger: require('electron-log')})*/
+import {updateElectronApp, UpdateSourceType} from 'update-electron-app';
 
 new Log();
 const utils = new Utils();
@@ -16,6 +14,15 @@ const config = new Config(utils);
 const windowManager = new WindowManager(config.config, utils);
 const printerManager = new PrinterManager(config.serverConfig, windowManager, config.config, utils);
 const usbManager = new UsbManager(printerManager);
+
+updateElectronApp({
+  updateSource: {
+    type: UpdateSourceType.ElectronPublicUpdateService,
+    repo: 'lpastorino80/express_app'
+  },
+  updateInterval: '1 hour',
+  notifyUser: false
+})
 
 async function main() {
 

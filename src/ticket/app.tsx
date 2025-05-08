@@ -16,8 +16,19 @@ const App = () => {
     //const videoURL = 'https://www.youtube.com/embed/vQbYvjmfbr4?autoplay=1&mute=1&controls=0&loop=1&playlist=vQbYvjmfbr4';
     //const videoURL = window.electronAPI.getVideoPath();
     const [videoPath, setVideoPath] = useState(null);
+    const [logoPath, setLogoPath] = useState(null);
 
     useEffect(() => {
+        const getLogoPath = async () => {
+            try {
+                const value = await window.electronAPI.getFiservLogoPath();
+                setLogoPath(value);
+                console.log("Logo path: " + value);
+            } catch (error) {
+                console.error('Error al obtener el path del logo:', error);
+            }
+        };
+        getLogoPath();
       const getVideoPath = async () => {
         try {
             const value = await window.electronAPI.checkVideo();
@@ -133,7 +144,7 @@ const App = () => {
       });
     }, [imageURL]);
     
-    return <SecondWindow ticket={ticket} chainImage={chainImageSrc} smallVideo={videoPath} defaultCurrency={ticket.currency} itemImage={imageSrc} ticketHasItems={ticket.items && ticket.items.length > 0} />;
+    return <SecondWindow ticket={ticket} chainImage={chainImageSrc} smallVideo={videoPath} logoPath={logoPath} defaultCurrency={ticket.currency} itemImage={imageSrc} ticketHasItems={ticket.items && ticket.items.length > 0} />;
 }
 
 export default App;
