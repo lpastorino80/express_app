@@ -11,7 +11,7 @@ import path from 'path';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    icon: path.resolve(__dirname, 'images/icon'),
+    icon: path.resolve(__dirname, 'images/icono'),
     extraResource: [
       "./public"
     ]
@@ -22,14 +22,14 @@ const config: ForgeConfig = {
     new MakerZIP({}, ['darwin']),
     new MakerDeb({
       options: {
-        icon: path.resolve(__dirname, 'images/icon.ico'),
+        icon: path.resolve(__dirname, 'images/icono'),
         categories: ['Utility'],
         description: 'Express Application',
       }
     }, ['linux']),
     new MakerRpm({
       options: {
-        icon: path.resolve(__dirname, 'images/icon.ico'),
+        icon: path.resolve(__dirname, 'images/icono'),
         categories: ['Utility'],
         description: 'Express Application',
       },

@@ -5,16 +5,27 @@ import path from "path";
 import fs from "fs";
 import {EventModel} from "./model/event-model";
 import Display = Electron.Display;
+import {Config} from "./config/config";
+import configWindow from "./configWindow/configWindow";
+import {ServerConfigModel} from "./model/server-config-model";
 
 class WindowManager {
-  private readonly config: ConfigModel;
   private readonly utils: Utils;
+  private configModel: ConfigModel;
   private mainWindow: BrowserWindow;
   private secondaryWindow: BrowserWindow;
+  private configWindow: BrowserWindow;
+  private config: Config;
 
-  public constructor(config: ConfigModel, utils: Utils) {
+  public constructor(config: Config, utils: Utils) {
     this.config = config;
+    this.configModel = config.config;
     this.utils = utils;
+  }
+
+  public setConfig(newConfig: Config) {
+    this.config = newConfig;
+    this.configModel = newConfig.config;
   }
 
   openWindows() {
@@ -22,19 +33,28 @@ class WindowManager {
     const primaryDisplay = displays[0];
     const secondaryDisplay = displays.length > 1 ? displays[1] : null;
     if (secondaryDisplay) {
-      if (this.config.invertDisplay) {
-        this.createWindow(secondaryDisplay, this.config, this.utils)
+      if (this.configModel.invertDisplay) {
+        this.createWindow(secondaryDisplay, this.configModel, this.utils)
         this.createSecondaryWindow(primaryDisplay)
       } else {
-        this.createWindow(primaryDisplay, this.config, this.utils)
+        this.createWindow(primaryDisplay, this.configModel, this.utils)
         this.createSecondaryWindow(secondaryDisplay)
       }
 
     } else {
-      this.createWindow(primaryDisplay, this.config, this.utils)
+      this.createWindow(primaryDisplay, this.configModel, this.utils)
     }
   }
 
+  closeConfigWindow = () => {
+    if (this.configWindow != null) {
+      console.log("Closing config window");
+      this.configWindow.close();
+      this.configWindow.on('closed', () => {
+        this.configWindow = null;
+      });
+    }
+  }
 
   closeWindow = () => {
     console.log("Closing application");
@@ -49,6 +69,47 @@ class WindowManager {
       this.secondaryWindow = null;
     }*/
   }
+
+  openConfigWindows() {
+    const displays = electron.screen.getAllDisplays();
+    const primaryDisplay = displays[0];
+    this.createConfigWindow(primaryDisplay)
+  }
+
+  createConfigWindow(display: Electron.Display) {
+    if (this.configWindow) {
+      return this.configWindow;
+    }
+    const { width: screenWidth, height: screenHeight } = display.workAreaSize;
+    const windowWidth = Math.floor(screenWidth * 0.5);
+    const windowHeight = Math.floor(screenHeight * 0.5);
+    const x = Math.floor((screenWidth - windowWidth) / 2);
+    const y = Math.floor((screenHeight - windowHeight) / 2);
+    this.configWindow = new BrowserWindow({
+      width: windowWidth,
+      height: windowHeight,
+      x: x,
+      y: y,
+      fullscreen: false,
+      frame: false,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js'),
+        nodeIntegration: true,
+        contextIsolation: true,
+        webSecurity: false
+      },
+    });
+    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+      this.configWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL + "/src/configWindow/index.html");
+    } else {
+      this.configWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/src/configWindow/index.html`));
+    }
+    //this.configWindow.webContents.openDevTools({ mode: 'detach' });
+    const appVersion = app.getVersion();
+    console.log('Version: ' + appVersion)
+    return this.configWindow;
+  }
+
 
   createWindow = (display: Display, config: ConfigModel, utils: Utils): BrowserWindow => {
     if (this.mainWindow) {
@@ -80,8 +141,18 @@ class WindowManager {
       </html>
     `));
 
+    //this.mainWindow.webContents.openDevTools({ mode: 'detach' });
+    const isWindows = process.platform === 'win32';
+    const isMac = process.platform === 'darwin';
+    if (isWindows) {
+      console.log("SO: Windows");
+    } else if (isMac) {
+      console.log("SO: IOS");  
+    } else {
+      console.log("SO: Linux");
+    }
+    console.log("Chromium version: " + process.versions.chrome);
     this.mainWindow.loadURL(config.url);
-    //this.mainWindow.webContents.openDevTools()
     const cache = true;
     if (cache) {
       const cacheBuster = new Date().getTime();

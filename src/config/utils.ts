@@ -21,7 +21,7 @@ class Utils {
   }
 
   public hexToUint8Array = function(hex) {
-    let result = [];
+    const result = [];
     for (let i = 0; i < hex.length; i += 2) {
       result.push(parseInt(hex.substr(i, 2), 16));
     }

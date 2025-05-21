@@ -6,12 +6,15 @@ import {ServerConfigModel} from "../model/server-config-model";
 import {Utils} from "./utils";
 import * as http from "node:http";
 import * as https from "node:https";
+import * as util from "node:util";
 
 class Config {
-    private readonly _config: ConfigModel;
+    private _config: ConfigModel;
     private _serverConfig: ServerConfigModel;
+    private utils: Utils;
 
     constructor(utils: Utils) {
+        this.utils = utils;
         this._config = this.getAppConfigFromFile(utils);
     }
 
@@ -23,19 +26,24 @@ class Config {
         return this._serverConfig;
     }
 
-    private defaultConfig(utils: Utils): ConfigModel {
-        let configJson: ConfigModel = {
-            url: "https://qaexpress.geocom.com.uy",
+    private defaultConfig(utils: Utils, url: string): ConfigModel {
+        const configJson: ConfigModel = {
+            url: url,
             invertDisplay: false,
             clientDeviceId: utils.getUUID()
         };
         const procDir = app.getPath('userData');
         const filePath = path.resolve(procDir, 'config.json');
         fs.writeFileSync(filePath, JSON.stringify(configJson));
+        this._config = configJson;
         return configJson;
     }
 
-    private getAppConfigFromFile(utils: Utils): ConfigModel {
+    public setConfigUrl(url:string) {
+        return this.defaultConfig(this.utils ,url);
+    }
+
+    public getAppConfigFromFile(utils: Utils): ConfigModel {
         try {
             const procDir = app.getPath('userData');
             const filePath = path.resolve(procDir, 'config.json');
@@ -44,17 +52,20 @@ class Config {
             return JSON.parse(configJson);
         } catch (readError) {
             if (readError.code === 'ENOENT') {
-                console.error("Config file does not exist, using default config.");
+                console.error("Config file does not exist");
             } else {
-                console.error("Error reading config file, using default config:", readError);
+                console.error("Error reading config file: ", readError);
             }
-            return this.defaultConfig(utils);
+            //return this.defaultConfig(utils);
+            return null;
         }
     }
 
     public async getServerConfig(): Promise<void> {
         try {
+            console.log('Fetching server config...');
             const response = await this.httpGetPromise(this.config.url + "/auth/config/web-application");
+            console.log('Server config: ' + response);
             this._serverConfig = JSON.parse(response);
         } catch (error) {
             console.error('Error fetching server config:', error);

@@ -45,7 +45,9 @@ class PrinterManager {
     }
 
     public getPrinterByVendorAndProduct(vendorId: number, productId: number): PrinterModel {
-        return this.serverConfig.printers.find(value => value.vendorId === vendorId && value.productId === productId);
+        if (vendorId != null && productId != null && this.serverConfig != null && this.serverConfig.printers != null) {
+            return this.serverConfig.printers.find(value => value.vendorId === vendorId && value.productId === productId);
+        }
     }
 
     public async printCommandsLines(deviceId: string, commands: string[]) {
@@ -73,7 +75,7 @@ class PrinterManager {
 
     async openDrawer() {
         for (const key in this.connectedDevices) {
-            if (this.connectedDevices.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(this.connectedDevices, key)) {
                 await this.getStatusDrawerInfo(this.connectedDevices[key], true);
             }
         }
@@ -122,7 +124,7 @@ class PrinterManager {
     }
     public async getStatusDrawer() {
         for (const key in this.connectedDevices) {
-            if (this.connectedDevices.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(this.connectedDevices, key)) {
                 await this.getStatusDrawerInfo(this.connectedDevices[key], false)
             }
         }
@@ -208,6 +210,7 @@ class PrinterManager {
     }
 
     public registerPrinter(vendorId: number, productId: number, description: string): void {
+        console.log("Searching printer " + vendorId + ":" + productId + "(" + description + ") for register printer");
         const printerModel: PrinterModel = this.getPrinterByVendorAndProduct(vendorId, productId);
         if (printerModel && printerModel.type === "PRINTER") {
             console.log("Found express printer with information " + JSON.stringify(printerModel));
@@ -220,6 +223,7 @@ class PrinterManager {
     }
 
     public unRegisterPrinter(vendorId: number, productId: number): void {
+        console.log("Searching printer " + vendorId + ":" + productId + " for unregister printer");
         const printerModel: PrinterModel = this.getPrinterByVendorAndProduct(vendorId, productId);
         if (printerModel && printerModel.type === "PRINTER") {
             console.log("Found express for unregister printer with information " + JSON.stringify(printerModel));

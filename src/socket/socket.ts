@@ -29,7 +29,7 @@ class Socket {
     }
 
     public onGetData(data): void {
-        var body = JSON.parse(data.body);
+        const body = JSON.parse(data.body);
         if (body.deviceName != null) {
             //OTHER JOBS
         } else {

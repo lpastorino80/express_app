@@ -20,6 +20,7 @@ import { ipcRenderer, contextBridge } from 'electron';
   });
   contextBridge.exposeInMainWorld('electronAPI', {
     closeApp: () => ipcRenderer.send('close-app'),
+    setConfigUrl: (key: string) => ipcRenderer.send('set-config-url', key),
     getLocalStorage: (key: string) => ipcRenderer.invoke('get-local-storage', key),
     getServerUrl: () => ipcRenderer.invoke('get-server-url'),
     getFiservLogoPath: () => ipcRenderer.invoke('get-logo-path'),

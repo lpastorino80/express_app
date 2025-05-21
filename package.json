@@ -1,14 +1,15 @@
 {
   "name": "express_app",
   "productName": "Express Pos",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "App de Express Pos",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "after-publish": "electron-builder -p never",
+    "publish": "npm run package && npm run after-publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
   "devDependencies": {
@@ -29,6 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "electron": "31.4.0",
+    "electron-builder": "^26.0.12",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
     "ts-node": "^10.0.0",
@@ -40,21 +42,52 @@
     "name": "Luis Pastorino",
     "email": "lpastorino@geocom.com.uy"
   },
+  "repository": "https://github.com/lpastorino80/express_app",
+  "build": {
+    "appId": "com.fiserv.expressapp",
+    "productName": "Express Pos",
+    "compression": "normal",
+    "icon": "images/icono",
+    "asar": true,
+    "win": {
+      "target": "nsis",
+      "artifactName": "Express.Pos.Setup.${version}.${ext}",
+      "icon": "images/icono"
+    },
+    "nsis": {
+      "oneClick": false,
+      "uninstallDisplayName": "Express Pos",
+      "shortcutName": "Express Pos"
+    },
+    "linux": {
+      "category": "Utility",
+      "target": "AppImage",
+      "icon": "images/icono.png",
+      "description": "Express Pos",
+      "maintainer": "Luis Pastorino <luis.pastorino@fiserv.com>",
+      "artifactName": "Express.Pos.${version}.${ext}"
+    },
+    "mac": {
+      "target": []
+    },
+    "directories": {
+      "output": "dist"
+    }
+  },
   "license": "MIT",
   "dependencies": {
     "@types/sockjs-client": "^1.5.4",
     "@types/stompjs": "^2.3.9",
-    "electron-builder": "^24.13.3",
     "electron-log": "^5.3.4",
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^8.2.0",
+    "electron-updater": "^6.6.2",
     "numeral": "^2.0.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "serialport": "^12.0.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
-    "update-electron-app": "^3.1.1",
     "usb": "^2.13.0",
     "usb-detection": "^4.14.2",
     "vite-plugin-checker": "^0.7.2",
