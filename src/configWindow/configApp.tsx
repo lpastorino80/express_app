@@ -47,7 +47,7 @@ const ConfigApp = () => {
                     <option value="https://xprargentina.geocom.com.uy">QA Argentina</option>
                 </select>
 
-                <button type="submit">Guardar</button>
+                <button className="save-button" type="submit">Guardar</button>
             </form>
         </div>
     );
