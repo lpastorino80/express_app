@@ -17,6 +17,23 @@ body {
     text-align: center;
 }
 
+.close-button {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: gray;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-button:hover {
+    background-color: #ff0101;
+    color: #FFFFFF;
+}
+
 h2 {
     margin-top: 0;
     color: #333;

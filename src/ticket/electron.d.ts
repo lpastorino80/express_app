@@ -5,6 +5,7 @@ export interface ElectronAPI {
     getVideoPath: () => string;
     getFiservLogoPath: () => string;
     checkVideo: () => Promise<string | null>;
+    closeApp: () => null;
   }
   
   declare global {

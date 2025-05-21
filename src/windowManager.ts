@@ -6,8 +6,6 @@ import fs from "fs";
 import {EventModel} from "./model/event-model";
 import Display = Electron.Display;
 import {Config} from "./config/config";
-import configWindow from "./configWindow/configWindow";
-import {ServerConfigModel} from "./model/server-config-model";
 
 class WindowManager {
   private readonly utils: Utils;

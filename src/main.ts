@@ -26,6 +26,11 @@ async function main() {
       });
     });
 
+    ipcMain.on('close-app', () => {
+      windowManager.closeWindow();
+      app.quit();
+    });
+
   } else {
     await config.getServerConfig();
     windowManager.setConfig(config);
