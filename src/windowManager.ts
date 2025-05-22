@@ -102,7 +102,6 @@ class WindowManager {
     } else {
       this.configWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/src/configWindow/index.html`));
     }
-    //this.configWindow.webContents.openDevTools({ mode: 'detach' });
     const appVersion = app.getVersion();
     console.log('Version: ' + appVersion)
     return this.configWindow;
@@ -177,7 +176,7 @@ class WindowManager {
       if (!fs.existsSync(videoDir)) {
         fs.mkdirSync(videoDir, { recursive: true });
       }
-      logoFiservPath = path.join(process.resourcesPath, 'public', 'assets', 'FiservLogo_125px.mp4');
+      logoFiservPath = path.join((process as any).resourcesPath, 'public', 'assets', 'FiservLogo_125px.mp4');
     }
     console.log('Version: ' + appVersion)
     this.mainWindow.webContents.executeJavaScript(`

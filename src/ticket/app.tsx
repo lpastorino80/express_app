@@ -104,9 +104,8 @@ const App = () => {
           const currentToken = auth.token.token;
           fetchChainImage(currentToken);
         }
-      });  
+      });
     }, [chainImageURL]);
-
 
 
     // get item image
@@ -136,14 +135,14 @@ const App = () => {
         }
       };
       window.electronAPI.getLocalStorage('auth-express').then((result) => {
-        if (result != null && result != undefined && result != "") {
+        if (result != null && result != "") {
           const auth = JSON.parse(result);
           const currentToken = auth.token.token;
           fetchTicketImage(currentToken);
         }
       });
     }, [imageURL]);
-    
+
     return <SecondWindow ticket={ticket} chainImage={chainImageSrc} smallVideo={videoPath} logoPath={logoPath} defaultCurrency={ticket.currency} itemImage={imageSrc} ticketHasItems={ticket.items && ticket.items.length > 0} />;
 }
 
